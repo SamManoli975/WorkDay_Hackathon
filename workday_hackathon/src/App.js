@@ -5,8 +5,8 @@ import './App.css';
 import './Overlay.css'; // Include overlay-specific CSS
 
 // For demo purposes we reuse logo.svg as both lock icons.
-import lockedIcon from './logo.svg';
-import unlockedIcon from './logo.svg';
+import lockedIcon from './lockedicon.jpg';
+import unlockedIcon from './unlockedicon.jpg';
 
 import OverlayForm from './components/OverlayForm';
 import OverlayDetail from './components/OverlayDetail';
@@ -96,7 +96,7 @@ function App() {
           onClick={handleLockClick}
         >
           <img
-            src={isUnlocked ? unlockedIcon : lockedIcon}
+            src={isUnlocked ?  lockedIcon : unlockedIcon }
             className="lock-icon"
             alt={isUnlocked ? 'Unlocked' : 'Locked'}
           />
