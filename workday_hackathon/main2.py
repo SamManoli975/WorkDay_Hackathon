@@ -71,7 +71,7 @@ def process_query(query: str) -> dict:
 def run_ai_edit(text: str) -> str:
     prompt = PromptTemplate(
         input_variables=["text"],
-        template="Improve the following for clarity and grammar:\n\n{text}\n\nImproved:"
+        template="make a more comprehensive task or note for me to do, that is more complex than this... to try push me to my limits make it a maximum of 100 words and dont include **:\n\n{text}\n\nImproved:"
     )
     chain = prompt | llm | parser
     try:

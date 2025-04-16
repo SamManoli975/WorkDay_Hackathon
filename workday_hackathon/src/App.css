@@ -247,6 +247,7 @@ h3{
 
 .overlay input[type="text"],
 .overlay input[type="date"],
+.overlay input[type="time"],
 .overlay textarea,
 .overlay select {
   width: 100%;

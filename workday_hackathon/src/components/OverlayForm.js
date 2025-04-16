@@ -27,6 +27,7 @@ const OverlayForm = ({ type, onClose, onSubmit }) => {
             <>
               <input type="text" name="title" placeholder="Task Title" required />
               <input type="date" name="dueDate" required />
+              <input type="time" name="dueTime" required />
             </>
           )}
           {type === 'habit' && (
