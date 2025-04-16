@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 
 const OverlayDetail = ({ type, item, onClose }) => {
   const [aiResult, setAiResult] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   // Helper function to build a text block from the item details.
   const getItemText = () => {
@@ -13,22 +15,54 @@ const OverlayDetail = ({ type, item, onClose }) => {
   };
 
   const handleAiEdit = async () => {
+    setIsLoading(true);
+    setError("");
+    
     try {
-      const response = await fetch("http://localhost:000/api/ai_edit", {
+      const response = await fetch("http://localhost:3000/api/ai_edit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ text: getItemText() }),
       });
-      const data = await response.json();
+
+      // First check if the response is ok
+      if (!response.ok) {
+        throw new Error(`Server responded with status: ${response.status}`);
+      }
+
+      // Get response text first to debug
+      const rawText = await response.text();
+      
+      // Try parsing the response as JSON
+      let data;
+      try {
+        data = JSON.parse(rawText);
+      } catch (parseError) {
+        console.error("Failed to parse JSON:", parseError);
+        console.error("Raw response:", rawText);
+        throw new Error(`Invalid JSON response: ${rawText.substring(0, 100)}...`);
+      }
+
+      // Check if data has the expected structure
+      if (!data || typeof data.response === 'undefined') {
+        throw new Error(`Unexpected response format: ${JSON.stringify(data)}`);
+      }
+
       setAiResult(data.response);
     } catch (error) {
       console.error("Error calling AI Edit:", error);
+      setError(`Error: ${error.message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleAiSuggestions = async () => {
+    setIsLoading(true);
+    setError("");
+    
     try {
       const response = await fetch("http://localhost:3000/api/ai_suggestions", {
         method: "POST",
@@ -37,10 +71,36 @@ const OverlayDetail = ({ type, item, onClose }) => {
         },
         body: JSON.stringify({ text: getItemText() }),
       });
-      const data = await response.json();
+
+      // First check if the response is ok
+      if (!response.ok) {
+        throw new Error(`Server responded with status: ${response.status}`);
+      }
+
+      // Get response text first to debug
+      const rawText = await response.text();
+      
+      // Try parsing the response as JSON
+      let data;
+      try {
+        data = JSON.parse(rawText);
+      } catch (parseError) {
+        console.error("Failed to parse JSON:", parseError);
+        console.error("Raw response:", rawText);
+        throw new Error(`Invalid JSON response: ${rawText.substring(0, 100)}...`);
+      }
+
+      // Check if data has the expected structure
+      if (!data || typeof data.response === 'undefined') {
+        throw new Error(`Unexpected response format: ${JSON.stringify(data)}`);
+      }
+
       setAiResult(data.response);
     } catch (error) {
       console.error("Error calling AI Suggestions:", error);
+      setError(`Error: ${error.message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -75,10 +135,19 @@ const OverlayDetail = ({ type, item, onClose }) => {
           </div>
         )}
         <div className="future-actions">
-          <button onClick={handleAiEdit}>AI Edit</button>
-          <button onClick={handleAiSuggestions}>AI Suggestions</button>
+          <button onClick={handleAiEdit} disabled={isLoading}>
+            {isLoading ? 'Loading...' : 'AI Edit'}
+          </button>
+          <button onClick={handleAiSuggestions} disabled={isLoading}>
+            {isLoading ? 'Loading...' : 'AI Suggestions'}
+          </button>
         </div>
-        {aiResult && (
+        {error && (
+          <div className="error-message" style={{ color: 'red', marginTop: '10px' }}>
+            {error}
+          </div>
+        )}
+        {aiResult && !error && (
           <div className="ai-result">
             <h4>AI Response:</h4>
             <p>{aiResult}</p>
