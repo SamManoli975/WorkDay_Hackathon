@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from main2 import run_ai_edit, run_ai_suggestions  # Import from main2
 
 app = Flask(__name__)
 CORS(app)
@@ -10,9 +11,8 @@ def ai_edit():
     text = data.get('text', '')
     print("Received for edit:", text)
 
-    return jsonify({
-        "response": f"✔️ AI Edited: '{text[:50]}'... (mock result)"
-    })
+    response_text = run_ai_edit(text)
+    return jsonify({"response": response_text})
 
 @app.route('/api/ai_suggestions', methods=['POST'])
 def ai_suggestions():
@@ -20,10 +20,8 @@ def ai_suggestions():
     text = data.get('text', '')
     print("Received for suggestions:", text)
 
-    
-    return jsonify({
-        "response": f"💡 AI Suggestions for: '{text[:50]}'... (mock result)"
-    })
+    response_text = run_ai_suggestions(text)
+    return jsonify({"response": response_text})
 
 if __name__ == '__main__':
     app.run(debug=True, port=3000)

@@ -181,3 +181,12 @@
   }
 }
 
+.lock-icon {
+  width: 120px;         /* or any size you like */
+  height: 120px;
+  object-fit: contain;  /* prevents stretch */
+  cursor: pointer;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
+}

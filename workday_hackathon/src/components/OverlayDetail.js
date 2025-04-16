@@ -14,7 +14,7 @@ const OverlayDetail = ({ type, item, onClose }) => {
 
   const handleAiEdit = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/ai_edit", {
+      const response = await fetch("http://localhost:000/api/ai_edit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,7 +30,7 @@ const OverlayDetail = ({ type, item, onClose }) => {
 
   const handleAiSuggestions = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/ai_suggestions", {
+      const response = await fetch("http://localhost:3000/api/ai_suggestions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
