@@ -139,7 +139,7 @@ const OverlayDetail = ({ type, item, onClose }) => {
         )}
         <div className="future-actions">
           <button onClick={handleAiEdit} disabled={isLoading}>
-            {isLoading ? 'Loading...' : 'AI Edit'}
+            {isLoading ? 'Loading...' : 'Answers to Questions'}
           </button>
           <button onClick={handleAiSuggestions} disabled={isLoading}>
             {isLoading ? 'Loading...' : 'AI Suggestions'}
