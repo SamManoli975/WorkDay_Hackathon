@@ -82,7 +82,7 @@ def run_ai_edit(text: str) -> str:
 def run_ai_suggestions(text: str) -> str:
     prompt = PromptTemplate(
         input_variables=["text"],
-        template="Suggest rewrites or improvements for:\n\n{text}\n\nSuggestions:"
+        template="Suggest a way to complete this goal. break it down into a max of 5 steps, one line for each step is enough. also do not use ** or stuff like that:\n\n{text}\n\nSuggestions:"
     )
     chain = prompt | llm | parser
     try:

@@ -116,7 +116,7 @@ const OverlayDetail = ({ type, item, onClose }) => {
         {type === 'note' && (
           <div>
             <h3>Note Detail</h3>
-            <p>{item.content}</p>
+            <p className='titles'>{item.content}</p>
           </div>
         )}
         {type === 'task' && (
@@ -153,7 +153,7 @@ const OverlayDetail = ({ type, item, onClose }) => {
         {aiResult && !error && (
           <div className="ai-result">
             <h4>AI Response:</h4>
-            <p>{aiResult}</p>
+            <p className="titles">{aiResult}</p>
           </div>
         )}
       </div>

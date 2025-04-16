@@ -100,7 +100,7 @@ function App() {
             className="lock-icon"
             alt={isUnlocked ? 'Unlocked' : 'Locked'}
           />
-          <p>Click the lock to unlock “Locked In”</p>
+          <p className='titles'>Click the lock to unlock “Locked In”</p>
         </div>
       ) : (
         // Main Dashboard
