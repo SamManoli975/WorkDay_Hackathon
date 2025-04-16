@@ -7,7 +7,7 @@ from langchain_core.output_parsers import StrOutputParser
 # LLM Setup
 def init_llm():
     if "GROQ_API_KEY" not in os.environ:
-        api_key = input("Enter your Groq API key: ").strip()
+        api_key = "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"
         if not api_key:
             print("API Key is required.")
             sys.exit(1)

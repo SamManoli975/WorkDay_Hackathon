@@ -19,13 +19,15 @@ const OverlayDetail = ({ type, item, onClose }) => {
     setError("");
     
     try {
-      const response = await fetch("http://localhost:3000/api/ai_edit", {
+      const response = await fetch("http://localhost:5000/api/ai_edit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ text: getItemText() }),
       });
+      
+      
 
       // First check if the response is ok
       if (!response.ok) {
@@ -64,13 +66,14 @@ const OverlayDetail = ({ type, item, onClose }) => {
     setError("");
     
     try {
-      const response = await fetch("http://localhost:3000/api/ai_suggestions", {
+      const response = await fetch("http://localhost:5000/api/ai_suggestions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ text: getItemText() }),
       });
+      
 
       // First check if the response is ok
       if (!response.ok) {
