@@ -156,7 +156,7 @@ if __name__ == "__main__":
                 else:
                      # Handle case where splitting resulted in empty list (shouldn't happen often)
                     print("4. Warning: Splitting resulted in no queries.")
-
+    
 
     except Exception as e:
         print(f"\nAn unexpected error occurred during processing: {e}")
