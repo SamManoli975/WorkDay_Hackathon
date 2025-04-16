@@ -1,8 +1,49 @@
 // src/components/OverlayDetail.js
-
-import React from 'react';
+import React, { useState } from 'react';
 
 const OverlayDetail = ({ type, item, onClose }) => {
+  const [aiResult, setAiResult] = useState("");
+
+  // Helper function to build a text block from the item details.
+  const getItemText = () => {
+    if (type === 'note') return item.content;
+    if (type === 'task') return `Task Title: ${item.title}\nDue Date: ${item.dueDate}`;
+    if (type === 'habit') return `Habit Name: ${item.name}\nFrequency: ${item.frequency}`;
+    return "";
+  };
+
+  const handleAiEdit = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/ai_edit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: getItemText() }),
+      });
+      const data = await response.json();
+      setAiResult(data.response);
+    } catch (error) {
+      console.error("Error calling AI Edit:", error);
+    }
+  };
+
+  const handleAiSuggestions = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/ai_suggestions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: getItemText() }),
+      });
+      const data = await response.json();
+      setAiResult(data.response);
+    } catch (error) {
+      console.error("Error calling AI Suggestions:", error);
+    }
+  };
+
   return (
     <div className="overlay">
       <div className="overlay-content">
@@ -34,9 +75,15 @@ const OverlayDetail = ({ type, item, onClose }) => {
           </div>
         )}
         <div className="future-actions">
-          <button>AI Edit</button>
-          <button>AI Suggestions</button>
+          <button onClick={handleAiEdit}>AI Edit</button>
+          <button onClick={handleAiSuggestions}>AI Suggestions</button>
         </div>
+        {aiResult && (
+          <div className="ai-result">
+            <h4>AI Response:</h4>
+            <p>{aiResult}</p>
+          </div>
+        )}
       </div>
     </div>
   );
